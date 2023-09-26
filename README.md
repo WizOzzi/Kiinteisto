@@ -1,1 +1,1 @@
-# Kiinteistosovellus -ohjelma.
+# Kiinteistösovellus -ohjelma.
