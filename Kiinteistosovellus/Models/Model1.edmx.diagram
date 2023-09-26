@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="083e99e8a2ba4c8584cb8b9da935e29e" Name="Diagram1">
+        <EntityTypeShape EntityType="KiinteistoDBModel.Contacts" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.Contractors" Width="1.5" PointX="6" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.Logins" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.MonthlySpendings" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.MonthlySpendingTypes" Width="1.5" PointX="3" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.OtherSpendings" Width="1.5" PointX="8.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.OtherSpendingTypes" Width="1.5" PointX="3" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.Persons" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.Plans" Width="1.5" PointX="3" PointY="22.75" IsExpanded="true" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__Contacts__Contra__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__Contacts__Person__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__MonthlySp__Contr__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__OtherSpen__Contr__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__Persons__Contrac__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__MonthlySp__Spend__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__OtherSpen__Other__797309D9" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.KuukausittainenVaiMuu" Width="1.5" PointX="6.625" PointY="23.125" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__Plans__MonthOrOt__1332DBDC" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.ForOtherSpendingTypeCharts" Width="1.5" PointX="6.375" PointY="0.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.ForCategorySortChartWithYears" Width="1.5" PointX="8.25" PointY="0.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.MonthlyAndOtherSpendingsByMonth" Width="1.5" PointX="10" PointY="0.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.MonthlyTypeSpendingsByMonth" Width="1.5" PointX="11.875" PointY="0.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.OtherTypeSpendingsByMonth" Width="1.5" PointX="13.625" PointY="0.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.ForMonthlyCategorySortChart" Width="1.5" PointX="6.25" PointY="2.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.ForOthersCategorySortChart" Width="1.5" PointX="8.25" PointY="2.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.MonthlyTypeSpendingsByMonthUnitsChart" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.MonthlySummary" Width="1.5" PointX="6.25" PointY="4.875" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.SpendingMonths" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="KiinteistoDBModel.Roles" Width="1.5" PointX="0.75" PointY="9.5" />
+        <AssociationConnector Association="KiinteistoDBModel.FK__Logins__RoleID__01D345B0" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

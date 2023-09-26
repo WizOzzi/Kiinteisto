@@ -1,0 +1,1570 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KiinteistoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContractorID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Contractors">
+          <Key>
+            <PropertyRef Name="ContractorID" />
+          </Key>
+          <Property Name="ContractorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="StreetAdress" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KuukausittainenVaiMuu">
+          <Key>
+            <PropertyRef Name="MonthOrOtherID" />
+          </Key>
+          <Property Name="MonthOrOtherID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MonthOrOtherName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MonthlySpendings">
+          <Key>
+            <PropertyRef Name="MonthlySpendingID" />
+          </Key>
+          <Property Name="MonthlySpendingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateBegin" Type="date" Nullable="false" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="SpendingTypeID" Type="int" Nullable="false" />
+          <Property Name="AmountOfUnits" Type="numeric" Precision="7" Scale="2" />
+          <Property Name="PricePerUnit" Type="numeric" Precision="7" Scale="2" />
+          <Property Name="TransferPayment" Type="numeric" Precision="7" Scale="2" />
+          <Property Name="FullPrice" Type="numeric" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="ContractorID" Type="int" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MonthlySpendingTypes">
+          <Key>
+            <PropertyRef Name="SpendingTypeID" />
+          </Key>
+          <Property Name="SpendingTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="OtherSpendings">
+          <Key>
+            <PropertyRef Name="OtherSpendingsID" />
+          </Key>
+          <Property Name="OtherSpendingsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateBegin" Type="date" Nullable="false" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="OtherSpendingTypeID" Type="int" Nullable="false" />
+          <Property Name="ContractorID" Type="int" />
+          <Property Name="Price" Type="numeric" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OtherSpendingTypes">
+          <Key>
+            <PropertyRef Name="OtherSpendingTypeId" />
+          </Key>
+          <Property Name="OtherSpendingTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractorID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Plans">
+          <Key>
+            <PropertyRef Name="PlandID" />
+          </Key>
+          <Property Name="PlandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateBegin" Type="date" Nullable="false" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="Desciption" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Price" Type="numeric" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="MonthOrOtherID" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.ForCategorySortChartWithYears' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ForCategorySortChartWithYears">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ROW_NUM" Type="bigint" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="SpendingYear" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.ForMonthlyCategorySortChart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ForMonthlyCategorySortChart">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ROW_NUM" Type="bigint" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="SpendingYear" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.ForOthersCategorySortChart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ForOthersCategorySortChart">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ROW_NUM" Type="bigint" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="SpendingYear" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.ForOtherSpendingTypeCharts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ForOtherSpendingTypeCharts">
+          <Key>
+            <PropertyRef Name="DateBegin" />
+            <PropertyRef Name="OtherSpendingTypeId" />
+          </Key>
+          <Property Name="rowid" Type="bigint" />
+          <Property Name="DateBegin" Type="date" Nullable="false" />
+          <Property Name="DailySpendings" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="OtherSpendingTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.MonthlyAndOtherSpendingsByMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MonthlyAndOtherSpendingsByMonth">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+          </Key>
+          <Property Name="Rivi" Type="bigint" />
+          <Property Name="Vuosi" Type="int" />
+          <Property Name="Tammikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Helmikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Maaliskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Huhtikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Toukokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Kesäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Heinäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Elokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Syyskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Lokakuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Marraskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Joulukuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.MonthlySummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MonthlySummary">
+          <Key>
+            <PropertyRef Name="Kokonaishinta" />
+            <PropertyRef Name="TypeName" />
+          </Key>
+          <Property Name="Rivi" Type="bigint" />
+          <Property Name="MonthOfSpending" Type="int" />
+          <Property Name="YearOfSpending" Type="int" />
+          <Property Name="Kokonaishinta" Type="numeric" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.MonthlyTypeSpendingsByMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MonthlyTypeSpendingsByMonth">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+            <PropertyRef Name="Tyyppi" />
+          </Key>
+          <Property Name="Rivi" Type="bigint" />
+          <Property Name="Vuosi" Type="int" />
+          <Property Name="Tammikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Helmikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Maaliskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Huhtikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Toukokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Kesäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Heinäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Elokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Syyskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Lokakuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Marraskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Joulukuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Tyyppi" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.MonthlyTypeSpendingsByMonthUnitsChart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MonthlyTypeSpendingsByMonthUnitsChart">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+            <PropertyRef Name="Tyyppi" />
+          </Key>
+          <Property Name="Rivi" Type="bigint" />
+          <Property Name="Vuosi" Type="int" />
+          <Property Name="Tammikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Helmikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Maaliskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Huhtikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Toukokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Kesäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Heinäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Elokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Syyskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Lokakuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Marraskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Joulukuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Tyyppi" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.OtherTypeSpendingsByMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OtherTypeSpendingsByMonth">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+            <PropertyRef Name="Tyyppi" />
+          </Key>
+          <Property Name="Rivi" Type="bigint" />
+          <Property Name="Vuosi" Type="int" />
+          <Property Name="Tammikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Helmikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Maaliskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Huhtikuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Toukokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Kesäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Heinäkuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Elokuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Syyskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Lokakuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Marraskuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Joulukuu" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Tyyppi" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KiinteistoDB.dbo.SpendingMonths' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SpendingMonths">
+          <Key>
+            <PropertyRef Name="Rivi" />
+          </Key>
+          <Property Name="Rivi" Type="bigint" Nullable="false" />
+          <Property Name="MonthOfSpending" Type="int" />
+          <Property Name="YearOfSpending" Type="int" />
+          <Property Name="Summa" Type="numeric" Precision="38" Scale="2" />
+        </EntityType>
+        <Association Name="FK__Contacts__Contra__6C190EBB">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Contacts__Person__5441852A">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Contacts__Person__5535A963">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Contacts__Person__5629CD9C">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Contacts__Person__571DF1D5">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logins__RoleID__01D345B0">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Contr__6D0D32F4">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="0..1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Spend__59FA5E80">
+          <End Role="MonthlySpendingTypes" Type="Self.MonthlySpendingTypes" Multiplicity="1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonthlySpendingTypes">
+              <PropertyRef Name="SpendingTypeID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="SpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Spend__5AEE82B9">
+          <End Role="MonthlySpendingTypes" Type="Self.MonthlySpendingTypes" Multiplicity="1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonthlySpendingTypes">
+              <PropertyRef Name="SpendingTypeID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="SpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Spend__5BE2A6F2">
+          <End Role="MonthlySpendingTypes" Type="Self.MonthlySpendingTypes" Multiplicity="1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonthlySpendingTypes">
+              <PropertyRef Name="SpendingTypeID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="SpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Spend__5CD6CB2B">
+          <End Role="MonthlySpendingTypes" Type="Self.MonthlySpendingTypes" Multiplicity="1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonthlySpendingTypes">
+              <PropertyRef Name="SpendingTypeID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="SpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Contr__6E01572D">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="0..1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Other__5EBF139D">
+          <End Role="OtherSpendingTypes" Type="Self.OtherSpendingTypes" Multiplicity="1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherSpendingTypes">
+              <PropertyRef Name="OtherSpendingTypeId" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="OtherSpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Other__5FB337D6">
+          <End Role="OtherSpendingTypes" Type="Self.OtherSpendingTypes" Multiplicity="1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherSpendingTypes">
+              <PropertyRef Name="OtherSpendingTypeId" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="OtherSpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Other__60A75C0F">
+          <End Role="OtherSpendingTypes" Type="Self.OtherSpendingTypes" Multiplicity="1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherSpendingTypes">
+              <PropertyRef Name="OtherSpendingTypeId" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="OtherSpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Other__619B8048">
+          <End Role="OtherSpendingTypes" Type="Self.OtherSpendingTypes" Multiplicity="1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherSpendingTypes">
+              <PropertyRef Name="OtherSpendingTypeId" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="OtherSpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Persons__Contrac__6EF57B66">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="1" />
+          <End Role="Persons" Type="Self.Persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Plans__MonthOrOt__6383C8BA">
+          <End Role="KuukausittainenVaiMuu" Type="Self.KuukausittainenVaiMuu" Multiplicity="0..1" />
+          <End Role="Plans" Type="Self.Plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KuukausittainenVaiMuu">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Principal>
+            <Dependent Role="Plans">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Plans__MonthOrOt__6477ECF3">
+          <End Role="KuukausittainenVaiMuu" Type="Self.KuukausittainenVaiMuu" Multiplicity="0..1" />
+          <End Role="Plans" Type="Self.Plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KuukausittainenVaiMuu">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Principal>
+            <Dependent Role="Plans">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Plans__MonthOrOt__656C112C">
+          <End Role="KuukausittainenVaiMuu" Type="Self.KuukausittainenVaiMuu" Multiplicity="0..1" />
+          <End Role="Plans" Type="Self.Plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KuukausittainenVaiMuu">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Principal>
+            <Dependent Role="Plans">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Plans__MonthOrOt__66603565">
+          <End Role="KuukausittainenVaiMuu" Type="Self.KuukausittainenVaiMuu" Multiplicity="0..1" />
+          <End Role="Plans" Type="Self.Plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KuukausittainenVaiMuu">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Principal>
+            <Dependent Role="Plans">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KiinteistoDBModelStoreContainer">
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contractors" EntityType="Self.Contractors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KuukausittainenVaiMuu" EntityType="Self.KuukausittainenVaiMuu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonthlySpendings" EntityType="Self.MonthlySpendings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonthlySpendingTypes" EntityType="Self.MonthlySpendingTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtherSpendings" EntityType="Self.OtherSpendings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtherSpendingTypes" EntityType="Self.OtherSpendingTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plans" EntityType="Self.Plans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForCategorySortChartWithYears" EntityType="Self.ForCategorySortChartWithYears" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ForCategorySortChartWithYears].[ROW_NUM] AS [ROW_NUM], 
+    [ForCategorySortChartWithYears].[Category] AS [Category], 
+    [ForCategorySortChartWithYears].[Price] AS [Price], 
+    [ForCategorySortChartWithYears].[SpendingYear] AS [SpendingYear]
+    FROM [dbo].[ForCategorySortChartWithYears] AS [ForCategorySortChartWithYears]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ForMonthlyCategorySortChart" EntityType="Self.ForMonthlyCategorySortChart" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ForMonthlyCategorySortChart].[ROW_NUM] AS [ROW_NUM], 
+    [ForMonthlyCategorySortChart].[Category] AS [Category], 
+    [ForMonthlyCategorySortChart].[Price] AS [Price], 
+    [ForMonthlyCategorySortChart].[SpendingYear] AS [SpendingYear]
+    FROM [dbo].[ForMonthlyCategorySortChart] AS [ForMonthlyCategorySortChart]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ForOthersCategorySortChart" EntityType="Self.ForOthersCategorySortChart" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ForOthersCategorySortChart].[ROW_NUM] AS [ROW_NUM], 
+    [ForOthersCategorySortChart].[Category] AS [Category], 
+    [ForOthersCategorySortChart].[Price] AS [Price], 
+    [ForOthersCategorySortChart].[SpendingYear] AS [SpendingYear]
+    FROM [dbo].[ForOthersCategorySortChart] AS [ForOthersCategorySortChart]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ForOtherSpendingTypeCharts" EntityType="Self.ForOtherSpendingTypeCharts" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ForOtherSpendingTypeCharts].[rowid] AS [rowid], 
+    [ForOtherSpendingTypeCharts].[DateBegin] AS [DateBegin], 
+    [ForOtherSpendingTypeCharts].[DailySpendings] AS [DailySpendings], 
+    [ForOtherSpendingTypeCharts].[OtherSpendingTypeId] AS [OtherSpendingTypeId]
+    FROM [dbo].[ForOtherSpendingTypeCharts] AS [ForOtherSpendingTypeCharts]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MonthlyAndOtherSpendingsByMonth" EntityType="Self.MonthlyAndOtherSpendingsByMonth" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MonthlyAndOtherSpendingsByMonth].[Rivi] AS [Rivi], 
+    [MonthlyAndOtherSpendingsByMonth].[Vuosi] AS [Vuosi], 
+    [MonthlyAndOtherSpendingsByMonth].[Tammikuu] AS [Tammikuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Helmikuu] AS [Helmikuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Maaliskuu] AS [Maaliskuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Huhtikuu] AS [Huhtikuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Toukokuu] AS [Toukokuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Kesäkuu] AS [Kesäkuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Heinäkuu] AS [Heinäkuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Elokuu] AS [Elokuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Syyskuu] AS [Syyskuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Lokakuu] AS [Lokakuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Marraskuu] AS [Marraskuu], 
+    [MonthlyAndOtherSpendingsByMonth].[Joulukuu] AS [Joulukuu]
+    FROM [dbo].[MonthlyAndOtherSpendingsByMonth] AS [MonthlyAndOtherSpendingsByMonth]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MonthlySummary" EntityType="Self.MonthlySummary" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MonthlySummary].[Rivi] AS [Rivi], 
+    [MonthlySummary].[MonthOfSpending] AS [MonthOfSpending], 
+    [MonthlySummary].[YearOfSpending] AS [YearOfSpending], 
+    [MonthlySummary].[Kokonaishinta] AS [Kokonaishinta], 
+    [MonthlySummary].[TypeName] AS [TypeName]
+    FROM [dbo].[MonthlySummary] AS [MonthlySummary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MonthlyTypeSpendingsByMonth" EntityType="Self.MonthlyTypeSpendingsByMonth" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MonthlyTypeSpendingsByMonth].[Rivi] AS [Rivi], 
+    [MonthlyTypeSpendingsByMonth].[Vuosi] AS [Vuosi], 
+    [MonthlyTypeSpendingsByMonth].[Tammikuu] AS [Tammikuu], 
+    [MonthlyTypeSpendingsByMonth].[Helmikuu] AS [Helmikuu], 
+    [MonthlyTypeSpendingsByMonth].[Maaliskuu] AS [Maaliskuu], 
+    [MonthlyTypeSpendingsByMonth].[Huhtikuu] AS [Huhtikuu], 
+    [MonthlyTypeSpendingsByMonth].[Toukokuu] AS [Toukokuu], 
+    [MonthlyTypeSpendingsByMonth].[Kesäkuu] AS [Kesäkuu], 
+    [MonthlyTypeSpendingsByMonth].[Heinäkuu] AS [Heinäkuu], 
+    [MonthlyTypeSpendingsByMonth].[Elokuu] AS [Elokuu], 
+    [MonthlyTypeSpendingsByMonth].[Syyskuu] AS [Syyskuu], 
+    [MonthlyTypeSpendingsByMonth].[Lokakuu] AS [Lokakuu], 
+    [MonthlyTypeSpendingsByMonth].[Marraskuu] AS [Marraskuu], 
+    [MonthlyTypeSpendingsByMonth].[Joulukuu] AS [Joulukuu], 
+    [MonthlyTypeSpendingsByMonth].[Tyyppi] AS [Tyyppi]
+    FROM [dbo].[MonthlyTypeSpendingsByMonth] AS [MonthlyTypeSpendingsByMonth]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MonthlyTypeSpendingsByMonthUnitsChart" EntityType="Self.MonthlyTypeSpendingsByMonthUnitsChart" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Rivi] AS [Rivi], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Vuosi] AS [Vuosi], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Tammikuu] AS [Tammikuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Helmikuu] AS [Helmikuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Maaliskuu] AS [Maaliskuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Huhtikuu] AS [Huhtikuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Toukokuu] AS [Toukokuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Kesäkuu] AS [Kesäkuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Heinäkuu] AS [Heinäkuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Elokuu] AS [Elokuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Syyskuu] AS [Syyskuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Lokakuu] AS [Lokakuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Marraskuu] AS [Marraskuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Joulukuu] AS [Joulukuu], 
+    [MonthlyTypeSpendingsByMonthUnitsChart].[Tyyppi] AS [Tyyppi]
+    FROM [dbo].[MonthlyTypeSpendingsByMonthUnitsChart] AS [MonthlyTypeSpendingsByMonthUnitsChart]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OtherTypeSpendingsByMonth" EntityType="Self.OtherTypeSpendingsByMonth" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [OtherTypeSpendingsByMonth].[Rivi] AS [Rivi], 
+    [OtherTypeSpendingsByMonth].[Vuosi] AS [Vuosi], 
+    [OtherTypeSpendingsByMonth].[Tammikuu] AS [Tammikuu], 
+    [OtherTypeSpendingsByMonth].[Helmikuu] AS [Helmikuu], 
+    [OtherTypeSpendingsByMonth].[Maaliskuu] AS [Maaliskuu], 
+    [OtherTypeSpendingsByMonth].[Huhtikuu] AS [Huhtikuu], 
+    [OtherTypeSpendingsByMonth].[Toukokuu] AS [Toukokuu], 
+    [OtherTypeSpendingsByMonth].[Kesäkuu] AS [Kesäkuu], 
+    [OtherTypeSpendingsByMonth].[Heinäkuu] AS [Heinäkuu], 
+    [OtherTypeSpendingsByMonth].[Elokuu] AS [Elokuu], 
+    [OtherTypeSpendingsByMonth].[Syyskuu] AS [Syyskuu], 
+    [OtherTypeSpendingsByMonth].[Lokakuu] AS [Lokakuu], 
+    [OtherTypeSpendingsByMonth].[Marraskuu] AS [Marraskuu], 
+    [OtherTypeSpendingsByMonth].[Joulukuu] AS [Joulukuu], 
+    [OtherTypeSpendingsByMonth].[Tyyppi] AS [Tyyppi]
+    FROM [dbo].[OtherTypeSpendingsByMonth] AS [OtherTypeSpendingsByMonth]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SpendingMonths" EntityType="Self.SpendingMonths" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SpendingMonths].[Rivi] AS [Rivi], 
+    [SpendingMonths].[MonthOfSpending] AS [MonthOfSpending], 
+    [SpendingMonths].[YearOfSpending] AS [YearOfSpending], 
+    [SpendingMonths].[Summa] AS [Summa]
+    FROM [dbo].[SpendingMonths] AS [SpendingMonths]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Contacts__Contra__6C190EBB" Association="Self.FK__Contacts__Contra__6C190EBB">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contacts__Person__5441852A" Association="Self.FK__Contacts__Person__5441852A">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contacts__Person__5535A963" Association="Self.FK__Contacts__Person__5535A963">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contacts__Person__5629CD9C" Association="Self.FK__Contacts__Person__5629CD9C">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contacts__Person__571DF1D5" Association="Self.FK__Contacts__Person__571DF1D5">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logins__RoleID__01D345B0" Association="Self.FK__Logins__RoleID__01D345B0">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Contr__6D0D32F4" Association="Self.FK__MonthlySp__Contr__6D0D32F4">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Spend__59FA5E80" Association="Self.FK__MonthlySp__Spend__59FA5E80">
+            <End Role="MonthlySpendingTypes" EntitySet="MonthlySpendingTypes" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Spend__5AEE82B9" Association="Self.FK__MonthlySp__Spend__5AEE82B9">
+            <End Role="MonthlySpendingTypes" EntitySet="MonthlySpendingTypes" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Spend__5BE2A6F2" Association="Self.FK__MonthlySp__Spend__5BE2A6F2">
+            <End Role="MonthlySpendingTypes" EntitySet="MonthlySpendingTypes" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Spend__5CD6CB2B" Association="Self.FK__MonthlySp__Spend__5CD6CB2B">
+            <End Role="MonthlySpendingTypes" EntitySet="MonthlySpendingTypes" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Contr__6E01572D" Association="Self.FK__OtherSpen__Contr__6E01572D">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Other__5EBF139D" Association="Self.FK__OtherSpen__Other__5EBF139D">
+            <End Role="OtherSpendingTypes" EntitySet="OtherSpendingTypes" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Other__5FB337D6" Association="Self.FK__OtherSpen__Other__5FB337D6">
+            <End Role="OtherSpendingTypes" EntitySet="OtherSpendingTypes" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Other__60A75C0F" Association="Self.FK__OtherSpen__Other__60A75C0F">
+            <End Role="OtherSpendingTypes" EntitySet="OtherSpendingTypes" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Other__619B8048" Association="Self.FK__OtherSpen__Other__619B8048">
+            <End Role="OtherSpendingTypes" EntitySet="OtherSpendingTypes" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Persons__Contrac__6EF57B66" Association="Self.FK__Persons__Contrac__6EF57B66">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Plans__MonthOrOt__6383C8BA" Association="Self.FK__Plans__MonthOrOt__6383C8BA">
+            <End Role="KuukausittainenVaiMuu" EntitySet="KuukausittainenVaiMuu" />
+            <End Role="Plans" EntitySet="Plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Plans__MonthOrOt__6477ECF3" Association="Self.FK__Plans__MonthOrOt__6477ECF3">
+            <End Role="KuukausittainenVaiMuu" EntitySet="KuukausittainenVaiMuu" />
+            <End Role="Plans" EntitySet="Plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Plans__MonthOrOt__656C112C" Association="Self.FK__Plans__MonthOrOt__656C112C">
+            <End Role="KuukausittainenVaiMuu" EntitySet="KuukausittainenVaiMuu" />
+            <End Role="Plans" EntitySet="Plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Plans__MonthOrOt__66603565" Association="Self.FK__Plans__MonthOrOt__66603565">
+            <End Role="KuukausittainenVaiMuu" EntitySet="KuukausittainenVaiMuu" />
+            <End Role="Plans" EntitySet="Plans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KiinteistoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContractorID" Type="Int32" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contractors" Relationship="Self.FK__Contacts__Contra__6C190EBB" FromRole="Contacts" ToRole="Contractors" />
+          <NavigationProperty Name="Persons" Relationship="Self.FK__Contacts__Person__6FE99F9F" FromRole="Contacts" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="Contractors">
+          <Key>
+            <PropertyRef Name="ContractorID" />
+          </Key>
+          <Property Name="ContractorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="StreetAdress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contacts" Relationship="Self.FK__Contacts__Contra__6C190EBB" FromRole="Contractors" ToRole="Contacts" />
+          <NavigationProperty Name="MonthlySpendings" Relationship="Self.FK__MonthlySp__Contr__6D0D32F4" FromRole="Contractors" ToRole="MonthlySpendings" />
+          <NavigationProperty Name="OtherSpendings" Relationship="Self.FK__OtherSpen__Contr__6E01572D" FromRole="Contractors" ToRole="OtherSpendings" />
+          <NavigationProperty Name="Persons" Relationship="Self.FK__Persons__Contrac__6EF57B66" FromRole="Contractors" ToRole="Persons" />
+          <Property Name="PostCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Roles" Relationship="KiinteistoDBModel.FK__Logins__RoleID__01D345B0" FromRole="Logins" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="MonthlySpendings">
+          <Key>
+            <PropertyRef Name="MonthlySpendingID" />
+          </Key>
+          <Property Name="MonthlySpendingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateBegin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="SpendingTypeID" Type="Int32" Nullable="false" />
+          <Property Name="AmountOfUnits" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="PricePerUnit" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="TransferPayment" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="FullPrice" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="ContractorID" Type="Int32" />
+          <NavigationProperty Name="Contractors" Relationship="Self.FK__MonthlySp__Contr__6D0D32F4" FromRole="MonthlySpendings" ToRole="Contractors" />
+          <NavigationProperty Name="MonthlySpendingTypes" Relationship="Self.FK__MonthlySp__Spend__787EE5A0" FromRole="MonthlySpendings" ToRole="MonthlySpendingTypes" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MonthlySpendingTypes">
+          <Key>
+            <PropertyRef Name="SpendingTypeID" />
+          </Key>
+          <Property Name="SpendingTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Unit" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MonthlySpendings" Relationship="Self.FK__MonthlySp__Spend__787EE5A0" FromRole="MonthlySpendingTypes" ToRole="MonthlySpendings" />
+        </EntityType>
+        <EntityType Name="OtherSpendings">
+          <Key>
+            <PropertyRef Name="OtherSpendingsID" />
+          </Key>
+          <Property Name="OtherSpendingsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateBegin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherSpendingTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ContractorID" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Contractors" Relationship="Self.FK__OtherSpen__Contr__6E01572D" FromRole="OtherSpendings" ToRole="Contractors" />
+          <NavigationProperty Name="OtherSpendingTypes" Relationship="Self.FK__OtherSpen__Other__797309D9" FromRole="OtherSpendings" ToRole="OtherSpendingTypes" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OtherSpendingTypes">
+          <Key>
+            <PropertyRef Name="OtherSpendingTypeId" />
+          </Key>
+          <Property Name="OtherSpendingTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OtherSpendings" Relationship="Self.FK__OtherSpen__Other__797309D9" FromRole="OtherSpendingTypes" ToRole="OtherSpendings" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractorID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contacts" Relationship="Self.FK__Contacts__Person__6FE99F9F" FromRole="Persons" ToRole="Contacts" />
+          <NavigationProperty Name="Contractors" Relationship="Self.FK__Persons__Contrac__6EF57B66" FromRole="Persons" ToRole="Contractors" />
+        </EntityType>
+        <EntityType Name="Plans">
+          <Key>
+            <PropertyRef Name="PlandID" />
+          </Key>
+          <Property Name="PlandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateBegin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="Desciption" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="MonthOrOtherID" Type="Int32" />
+          <NavigationProperty Name="KuukausittainenVaiMuu" Relationship="KiinteistoDBModel.FK__Plans__MonthOrOt__1332DBDC" FromRole="Plans" ToRole="KuukausittainenVaiMuu" />
+        </EntityType>
+        <Association Name="FK__Contacts__Contra__6C190EBB">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Contacts__Person__6FE99F9F">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Contr__6D0D32F4">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="0..1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Contr__6E01572D">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="0..1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Persons__Contrac__6EF57B66">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="1" />
+          <End Role="Persons" Type="Self.Persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlySp__Spend__787EE5A0">
+          <End Role="MonthlySpendingTypes" Type="Self.MonthlySpendingTypes" Multiplicity="1" />
+          <End Role="MonthlySpendings" Type="Self.MonthlySpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonthlySpendingTypes">
+              <PropertyRef Name="SpendingTypeID" />
+            </Principal>
+            <Dependent Role="MonthlySpendings">
+              <PropertyRef Name="SpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OtherSpen__Other__797309D9">
+          <End Role="OtherSpendingTypes" Type="Self.OtherSpendingTypes" Multiplicity="1" />
+          <End Role="OtherSpendings" Type="Self.OtherSpendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherSpendingTypes">
+              <PropertyRef Name="OtherSpendingTypeId" />
+            </Principal>
+            <Dependent Role="OtherSpendings">
+              <PropertyRef Name="OtherSpendingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KiinteistoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" />
+          <EntitySet Name="Contractors" EntityType="Self.Contractors" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" />
+          <EntitySet Name="MonthlySpendings" EntityType="Self.MonthlySpendings" />
+          <EntitySet Name="MonthlySpendingTypes" EntityType="Self.MonthlySpendingTypes" />
+          <EntitySet Name="OtherSpendings" EntityType="Self.OtherSpendings" />
+          <EntitySet Name="OtherSpendingTypes" EntityType="Self.OtherSpendingTypes" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" />
+          <EntitySet Name="Plans" EntityType="Self.Plans" />
+          <AssociationSet Name="FK__Contacts__Contra__6C190EBB" Association="Self.FK__Contacts__Contra__6C190EBB">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contacts__Person__6FE99F9F" Association="Self.FK__Contacts__Person__6FE99F9F">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Contr__6D0D32F4" Association="Self.FK__MonthlySp__Contr__6D0D32F4">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Contr__6E01572D" Association="Self.FK__OtherSpen__Contr__6E01572D">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Persons__Contrac__6EF57B66" Association="Self.FK__Persons__Contrac__6EF57B66">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlySp__Spend__787EE5A0" Association="Self.FK__MonthlySp__Spend__787EE5A0">
+            <End Role="MonthlySpendingTypes" EntitySet="MonthlySpendingTypes" />
+            <End Role="MonthlySpendings" EntitySet="MonthlySpendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OtherSpen__Other__797309D9" Association="Self.FK__OtherSpen__Other__797309D9">
+            <End Role="OtherSpendingTypes" EntitySet="OtherSpendingTypes" />
+            <End Role="OtherSpendings" EntitySet="OtherSpendings" />
+          </AssociationSet>
+          <EntitySet Name="KuukausittainenVaiMuu" EntityType="KiinteistoDBModel.KuukausittainenVaiMuu" />
+          <AssociationSet Name="FK__Plans__MonthOrOt__1332DBDC" Association="KiinteistoDBModel.FK__Plans__MonthOrOt__1332DBDC">
+            <End Role="KuukausittainenVaiMuu" EntitySet="KuukausittainenVaiMuu" />
+            <End Role="Plans" EntitySet="Plans" />
+          </AssociationSet>
+          <EntitySet Name="ForOtherSpendingTypeCharts" EntityType="KiinteistoDBModel.ForOtherSpendingTypeCharts" />
+          <EntitySet Name="ForCategorySortChartWithYears" EntityType="KiinteistoDBModel.ForCategorySortChartWithYears" />
+          <EntitySet Name="MonthlyAndOtherSpendingsByMonth" EntityType="KiinteistoDBModel.MonthlyAndOtherSpendingsByMonth" />
+          <EntitySet Name="MonthlyTypeSpendingsByMonth" EntityType="KiinteistoDBModel.MonthlyTypeSpendingsByMonth" />
+          <EntitySet Name="OtherTypeSpendingsByMonth" EntityType="KiinteistoDBModel.OtherTypeSpendingsByMonth" />
+          <EntitySet Name="ForMonthlyCategorySortChart" EntityType="KiinteistoDBModel.ForMonthlyCategorySortChart" />
+          <EntitySet Name="ForOthersCategorySortChart" EntityType="KiinteistoDBModel.ForOthersCategorySortChart" />
+          <EntitySet Name="MonthlyTypeSpendingsByMonthUnitsChart" EntityType="KiinteistoDBModel.MonthlyTypeSpendingsByMonthUnitsChart" />
+          <EntitySet Name="MonthlySummary" EntityType="KiinteistoDBModel.MonthlySummary" />
+          <EntitySet Name="SpendingMonths" EntityType="KiinteistoDBModel.SpendingMonths" />
+          <EntitySet Name="Roles" EntityType="KiinteistoDBModel.Roles" />
+          <AssociationSet Name="FK__Logins__RoleID__01D345B0" Association="KiinteistoDBModel.FK__Logins__RoleID__01D345B0">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="KuukausittainenVaiMuu">
+          <Key>
+            <PropertyRef Name="MonthOrOtherID" />
+          </Key>
+          <Property Name="MonthOrOtherID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MonthOrOtherName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Plans" Relationship="KiinteistoDBModel.FK__Plans__MonthOrOt__1332DBDC" FromRole="KuukausittainenVaiMuu" ToRole="Plans" />
+        </EntityType>
+        <Association Name="FK__Plans__MonthOrOt__1332DBDC">
+          <End Type="KiinteistoDBModel.KuukausittainenVaiMuu" Role="KuukausittainenVaiMuu" Multiplicity="0..1" />
+          <End Type="KiinteistoDBModel.Plans" Role="Plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KuukausittainenVaiMuu">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Principal>
+            <Dependent Role="Plans">
+              <PropertyRef Name="MonthOrOtherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ForOtherSpendingTypeCharts">
+          <Key>
+            <PropertyRef Name="DateBegin" />
+            <PropertyRef Name="OtherSpendingTypeId" />
+          </Key>
+          <Property Name="rowid" Type="Int64" />
+          <Property Name="DateBegin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DailySpendings" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="OtherSpendingTypeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForCategorySortChartWithYears">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ROW_NUM" Type="Int64" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SpendingYear" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MonthlyAndOtherSpendingsByMonth">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+          </Key>
+          <Property Name="Rivi" Type="Int64" />
+          <Property Name="Vuosi" Type="Int32" />
+          <Property Name="Tammikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Helmikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Maaliskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Huhtikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Toukokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Kesäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Heinäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Elokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Syyskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Lokakuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Marraskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Joulukuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="MonthlyTypeSpendingsByMonth">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+            <PropertyRef Name="Tyyppi" />
+          </Key>
+          <Property Name="Rivi" Type="Int64" />
+          <Property Name="Vuosi" Type="Int32" />
+          <Property Name="Tammikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Helmikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Maaliskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Huhtikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Toukokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Kesäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Heinäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Elokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Syyskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Lokakuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Marraskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Joulukuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Tyyppi" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OtherTypeSpendingsByMonth">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+            <PropertyRef Name="Tyyppi" />
+          </Key>
+          <Property Name="Rivi" Type="Int64" />
+          <Property Name="Vuosi" Type="Int32" />
+          <Property Name="Tammikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Helmikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Maaliskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Huhtikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Toukokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Kesäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Heinäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Elokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Syyskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Lokakuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Marraskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Joulukuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Tyyppi" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForMonthlyCategorySortChart">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ROW_NUM" Type="Int64" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SpendingYear" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ForOthersCategorySortChart">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ROW_NUM" Type="Int64" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SpendingYear" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MonthlyTypeSpendingsByMonthUnitsChart">
+          <Key>
+            <PropertyRef Name="Tammikuu" />
+            <PropertyRef Name="Helmikuu" />
+            <PropertyRef Name="Maaliskuu" />
+            <PropertyRef Name="Huhtikuu" />
+            <PropertyRef Name="Toukokuu" />
+            <PropertyRef Name="Kesäkuu" />
+            <PropertyRef Name="Heinäkuu" />
+            <PropertyRef Name="Elokuu" />
+            <PropertyRef Name="Syyskuu" />
+            <PropertyRef Name="Lokakuu" />
+            <PropertyRef Name="Marraskuu" />
+            <PropertyRef Name="Joulukuu" />
+            <PropertyRef Name="Tyyppi" />
+          </Key>
+          <Property Name="Rivi" Type="Int64" />
+          <Property Name="Vuosi" Type="Int32" />
+          <Property Name="Tammikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Helmikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Maaliskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Huhtikuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Toukokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Kesäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Heinäkuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Elokuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Syyskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Lokakuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Marraskuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Joulukuu" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Tyyppi" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MonthlySummary">
+          <Key>
+            <PropertyRef Name="Kokonaishinta" />
+            <PropertyRef Name="TypeName" />
+          </Key>
+          <Property Name="Rivi" Type="Int64" />
+          <Property Name="MonthOfSpending" Type="Int32" />
+          <Property Name="YearOfSpending" Type="Int32" />
+          <Property Name="Kokonaishinta" Type="Decimal" Nullable="false" Precision="7" Scale="2" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SpendingMonths">
+          <Key>
+            <PropertyRef Name="Rivi" />
+          </Key>
+          <Property Name="Rivi" Type="Int64" Nullable="false" />
+          <Property Name="MonthOfSpending" Type="Int32" />
+          <Property Name="YearOfSpending" Type="Int32" />
+          <Property Name="Summa" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Logins" Relationship="KiinteistoDBModel.FK__Logins__RoleID__01D345B0" FromRole="Roles" ToRole="Logins" />
+        </EntityType>
+        <Association Name="FK__Logins__RoleID__01D345B0">
+          <End Type="KiinteistoDBModel.Roles" Role="Roles" Multiplicity="1" />
+          <End Type="KiinteistoDBModel.Logins" Role="Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KiinteistoDBModelStoreContainer" CdmEntityContainer="KiinteistoDBEntities">
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.Contacts">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contractors">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.Contractors">
+              <MappingFragment StoreEntitySet="Contractors">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StreetAdress" ColumnName="StreetAdress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.Logins">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlySpendings">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.MonthlySpendings">
+              <MappingFragment StoreEntitySet="MonthlySpendings">
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="MonthlySpendingID" ColumnName="MonthlySpendingID" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="SpendingTypeID" ColumnName="SpendingTypeID" />
+                <ScalarProperty Name="AmountOfUnits" ColumnName="AmountOfUnits" />
+                <ScalarProperty Name="PricePerUnit" ColumnName="PricePerUnit" />
+                <ScalarProperty Name="TransferPayment" ColumnName="TransferPayment" />
+                <ScalarProperty Name="FullPrice" ColumnName="FullPrice" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlySpendingTypes">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.MonthlySpendingTypes">
+              <MappingFragment StoreEntitySet="MonthlySpendingTypes">
+                <ScalarProperty Name="SpendingTypeID" ColumnName="SpendingTypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OtherSpendings">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.OtherSpendings">
+              <MappingFragment StoreEntitySet="OtherSpendings">
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="OtherSpendingsID" ColumnName="OtherSpendingsID" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OtherSpendingTypeID" ColumnName="OtherSpendingTypeID" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OtherSpendingTypes">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.OtherSpendingTypes">
+              <MappingFragment StoreEntitySet="OtherSpendingTypes">
+                <ScalarProperty Name="OtherSpendingTypeId" ColumnName="OtherSpendingTypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persons">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.Persons">
+              <MappingFragment StoreEntitySet="Persons">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plans">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.Plans">
+              <MappingFragment StoreEntitySet="Plans">
+                <ScalarProperty Name="MonthOrOtherID" ColumnName="MonthOrOtherID" />
+                <ScalarProperty Name="PlandID" ColumnName="PlandID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="Desciption" ColumnName="Desciption" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KuukausittainenVaiMuu">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.KuukausittainenVaiMuu">
+              <MappingFragment StoreEntitySet="KuukausittainenVaiMuu">
+                <ScalarProperty Name="MonthOrOtherName" ColumnName="MonthOrOtherName" />
+                <ScalarProperty Name="MonthOrOtherID" ColumnName="MonthOrOtherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForOtherSpendingTypeCharts">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.ForOtherSpendingTypeCharts">
+              <MappingFragment StoreEntitySet="ForOtherSpendingTypeCharts">
+                <ScalarProperty Name="OtherSpendingTypeId" ColumnName="OtherSpendingTypeId" />
+                <ScalarProperty Name="DailySpendings" ColumnName="DailySpendings" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForCategorySortChartWithYears">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.ForCategorySortChartWithYears">
+              <MappingFragment StoreEntitySet="ForCategorySortChartWithYears">
+                <ScalarProperty Name="SpendingYear" ColumnName="SpendingYear" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ROW_NUM" ColumnName="ROW_NUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyAndOtherSpendingsByMonth">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.MonthlyAndOtherSpendingsByMonth">
+              <MappingFragment StoreEntitySet="MonthlyAndOtherSpendingsByMonth">
+                <ScalarProperty Name="Joulukuu" ColumnName="Joulukuu" />
+                <ScalarProperty Name="Marraskuu" ColumnName="Marraskuu" />
+                <ScalarProperty Name="Lokakuu" ColumnName="Lokakuu" />
+                <ScalarProperty Name="Syyskuu" ColumnName="Syyskuu" />
+                <ScalarProperty Name="Elokuu" ColumnName="Elokuu" />
+                <ScalarProperty Name="Heinäkuu" ColumnName="Heinäkuu" />
+                <ScalarProperty Name="Kesäkuu" ColumnName="Kesäkuu" />
+                <ScalarProperty Name="Toukokuu" ColumnName="Toukokuu" />
+                <ScalarProperty Name="Huhtikuu" ColumnName="Huhtikuu" />
+                <ScalarProperty Name="Maaliskuu" ColumnName="Maaliskuu" />
+                <ScalarProperty Name="Helmikuu" ColumnName="Helmikuu" />
+                <ScalarProperty Name="Tammikuu" ColumnName="Tammikuu" />
+                <ScalarProperty Name="Vuosi" ColumnName="Vuosi" />
+                <ScalarProperty Name="Rivi" ColumnName="Rivi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyTypeSpendingsByMonth">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.MonthlyTypeSpendingsByMonth">
+              <MappingFragment StoreEntitySet="MonthlyTypeSpendingsByMonth">
+                <ScalarProperty Name="Tyyppi" ColumnName="Tyyppi" />
+                <ScalarProperty Name="Joulukuu" ColumnName="Joulukuu" />
+                <ScalarProperty Name="Marraskuu" ColumnName="Marraskuu" />
+                <ScalarProperty Name="Lokakuu" ColumnName="Lokakuu" />
+                <ScalarProperty Name="Syyskuu" ColumnName="Syyskuu" />
+                <ScalarProperty Name="Elokuu" ColumnName="Elokuu" />
+                <ScalarProperty Name="Heinäkuu" ColumnName="Heinäkuu" />
+                <ScalarProperty Name="Kesäkuu" ColumnName="Kesäkuu" />
+                <ScalarProperty Name="Toukokuu" ColumnName="Toukokuu" />
+                <ScalarProperty Name="Huhtikuu" ColumnName="Huhtikuu" />
+                <ScalarProperty Name="Maaliskuu" ColumnName="Maaliskuu" />
+                <ScalarProperty Name="Helmikuu" ColumnName="Helmikuu" />
+                <ScalarProperty Name="Tammikuu" ColumnName="Tammikuu" />
+                <ScalarProperty Name="Vuosi" ColumnName="Vuosi" />
+                <ScalarProperty Name="Rivi" ColumnName="Rivi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OtherTypeSpendingsByMonth">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.OtherTypeSpendingsByMonth">
+              <MappingFragment StoreEntitySet="OtherTypeSpendingsByMonth">
+                <ScalarProperty Name="Tyyppi" ColumnName="Tyyppi" />
+                <ScalarProperty Name="Joulukuu" ColumnName="Joulukuu" />
+                <ScalarProperty Name="Marraskuu" ColumnName="Marraskuu" />
+                <ScalarProperty Name="Lokakuu" ColumnName="Lokakuu" />
+                <ScalarProperty Name="Syyskuu" ColumnName="Syyskuu" />
+                <ScalarProperty Name="Elokuu" ColumnName="Elokuu" />
+                <ScalarProperty Name="Heinäkuu" ColumnName="Heinäkuu" />
+                <ScalarProperty Name="Kesäkuu" ColumnName="Kesäkuu" />
+                <ScalarProperty Name="Toukokuu" ColumnName="Toukokuu" />
+                <ScalarProperty Name="Huhtikuu" ColumnName="Huhtikuu" />
+                <ScalarProperty Name="Maaliskuu" ColumnName="Maaliskuu" />
+                <ScalarProperty Name="Helmikuu" ColumnName="Helmikuu" />
+                <ScalarProperty Name="Tammikuu" ColumnName="Tammikuu" />
+                <ScalarProperty Name="Vuosi" ColumnName="Vuosi" />
+                <ScalarProperty Name="Rivi" ColumnName="Rivi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForMonthlyCategorySortChart">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.ForMonthlyCategorySortChart">
+              <MappingFragment StoreEntitySet="ForMonthlyCategorySortChart">
+                <ScalarProperty Name="SpendingYear" ColumnName="SpendingYear" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ROW_NUM" ColumnName="ROW_NUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForOthersCategorySortChart">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.ForOthersCategorySortChart">
+              <MappingFragment StoreEntitySet="ForOthersCategorySortChart">
+                <ScalarProperty Name="SpendingYear" ColumnName="SpendingYear" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ROW_NUM" ColumnName="ROW_NUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyTypeSpendingsByMonthUnitsChart">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.MonthlyTypeSpendingsByMonthUnitsChart">
+              <MappingFragment StoreEntitySet="MonthlyTypeSpendingsByMonthUnitsChart">
+                <ScalarProperty Name="Tyyppi" ColumnName="Tyyppi" />
+                <ScalarProperty Name="Joulukuu" ColumnName="Joulukuu" />
+                <ScalarProperty Name="Marraskuu" ColumnName="Marraskuu" />
+                <ScalarProperty Name="Lokakuu" ColumnName="Lokakuu" />
+                <ScalarProperty Name="Syyskuu" ColumnName="Syyskuu" />
+                <ScalarProperty Name="Elokuu" ColumnName="Elokuu" />
+                <ScalarProperty Name="Heinäkuu" ColumnName="Heinäkuu" />
+                <ScalarProperty Name="Kesäkuu" ColumnName="Kesäkuu" />
+                <ScalarProperty Name="Toukokuu" ColumnName="Toukokuu" />
+                <ScalarProperty Name="Huhtikuu" ColumnName="Huhtikuu" />
+                <ScalarProperty Name="Maaliskuu" ColumnName="Maaliskuu" />
+                <ScalarProperty Name="Helmikuu" ColumnName="Helmikuu" />
+                <ScalarProperty Name="Tammikuu" ColumnName="Tammikuu" />
+                <ScalarProperty Name="Vuosi" ColumnName="Vuosi" />
+                <ScalarProperty Name="Rivi" ColumnName="Rivi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlySummary">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.MonthlySummary">
+              <MappingFragment StoreEntitySet="MonthlySummary">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Kokonaishinta" ColumnName="Kokonaishinta" />
+                <ScalarProperty Name="YearOfSpending" ColumnName="YearOfSpending" />
+                <ScalarProperty Name="MonthOfSpending" ColumnName="MonthOfSpending" />
+                <ScalarProperty Name="Rivi" ColumnName="Rivi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpendingMonths">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.SpendingMonths">
+              <MappingFragment StoreEntitySet="SpendingMonths">
+                <ScalarProperty Name="Summa" ColumnName="Summa" />
+                <ScalarProperty Name="YearOfSpending" ColumnName="YearOfSpending" />
+                <ScalarProperty Name="MonthOfSpending" ColumnName="MonthOfSpending" />
+                <ScalarProperty Name="Rivi" ColumnName="Rivi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="KiinteistoDBModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

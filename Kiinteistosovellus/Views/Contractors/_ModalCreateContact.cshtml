@@ -1,0 +1,210 @@
+﻿@model Kiinteistosovellus.Models.Contacts
+
+@if (Session["UserName"] != null)
+{
+    <div class="modal fade" data-bs-backdrop="static" id="ModalContactCreate">
+        <div class="modal-dialog modal-dialog-centered" id="modalWindow">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Luo uusi yhteystieto</h3>
+                </div>
+
+                <div class="modal-body">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "createForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.EditorFor(model => model.ContractorID, new { htmlAttributes = new { @class = "form-control", @id = "ContractorID", @style="display:none" } })
+                        <h5>@ViewBag.ContractorName</h5>
+                        <hr />
+                        <div class="form-horizontal">
+                            <div id="rowDiv">
+                                <div id="colDiv1">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    <b id="yhteystiedot" style="display:none">Uusi yhteystieto<br /></b>
+
+                                    <div class="form-group">
+                                        Henkilö
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("PersonID", null, new { @class = "form-control form-select", id = "lePerson" })
+                                            @Html.ValidationMessageFor(model => model.PersonID, "", new { @class = "text-danger" })
+                                            <div style="text-align:right; padding-right:110px"><a class="card-link" role="button" id="lisaaUusiHiddenField">Lisää uusi henkilö</a></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        Puhelinnumero<div class="text-danger" id="wrongPhone" style="display:none">, kirjoita oikea puhelinnumero</div>
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "phone" } })
+                                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        Sähköposti<div class="text-danger" id="wrongEmail" style="display:none">, oikea muoto: käyttäjätunnus@domain.fi</div>
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "mail" } })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="text-danger" id="noContactInfo" style="display:none">Puhelinnumero tai sähköpostiosoite vaaditaan</div>
+                                </div>
+
+                                <div id="colDiv2">
+                                    @*Opens PartialView for Persons*@
+                                    <div id="divForPartialPseudo" style="display:none; width:100%;"></div>
+
+                                    @*Opens if model is valid and database is being updated*@
+                                    <div class="form-group" id="successfullyAddedPerson" style="display:none; padding:90px 40px">
+                                        <div class="text-success">Henkilö lisätty onnistuneesti</div>
+                                        <div style="padding:0 3px"><a class="card-link" role="button" id="lisaaToinenHenkilo">Lisää uusi henkilö</a> | <a class="card-link closeAddPerson" role="button">Peruuta</a></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <div class="form-actions no-color">
+                        <input type="button" value="Lisää yhteystiedot" id="submitDataModal" class="btn btn-primary" />
+                        <a href="#" data-bs-dismiss="modal" onclick='destroyDiv("ModalContactCreate")'>Takaisin</a>
+                    </div>
+                </div>
+                <div id="divForPartialPseudo" style="display:inline-block;"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        //Submiting Contact + validation
+        $("#submitDataModal").click(function () {
+            var telephone = $("#phone").val();
+            var email = $("#mail").val();
+            var mailFormat = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            var phoneFormat = /^[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/g;
+            if ((telephone == "" && email == "") || (!email.match(mailFormat) && email != "")  || (!telephone.match(phoneFormat) && telephone != "")) {
+                if (telephone != "" || email != "") {
+                    document.getElementById("noContactInfo").style.display = "none";
+                }
+                else {
+                    document.getElementById("noContactInfo").style.display = "inline-block";
+                }
+
+                if (!email.match(mailFormat) && email != "") {
+                    //console.log("email wrong")
+                    document.getElementById("wrongEmail").style.display = "inline-block";
+                }
+                else {
+                    document.getElementById("wrongEmail").style.display = "none";
+                }
+
+                if (!telephone.match(phoneFormat) && telephone != "") {
+                    //console.log("phone wrong")
+                    document.getElementById("wrongPhone").style.display = "inline-block";
+                }
+                else {
+                    document.getElementById("wrongPhone").style.display = "none";
+                }
+            }
+            else {
+                submitModalPost("Contractors", "CreateContact", "createForm", "ModalContactCreate");
+                document.getElementById("noContactInfo").style.display = "none";
+            }
+        });
+
+        //Opens Persons PartialView and widens modal window
+        $("#lisaaUusiHiddenField").click(function () {
+            var url = "/Contractors/CreatePerson/?id=" + @ViewBag.ContractorYes;
+            var divForPartial = $("#divForPartialPseudo");
+
+            $.ajax({
+                url: url, //Haetaan haluttu controller-action
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'get', //pitää spesifioida get, jos halutaan get-tyyppinen toiminto
+                type: "get",
+                success: function (result) {
+                    $(divForPartial).html(""); //kaiken varalta tyhjennetään ensin partial view kohta
+                    $(divForPartial).html(result); //sitten se täytetään partialViewResultista saadulla partial viewillä
+                }
+            });
+
+            $("#modalWindow").addClass("modal-lg");
+            $("#rowDiv").addClass("row");
+            $("#colDiv1").addClass("col-sm-6");
+            $("#colDiv2").addClass("col-sm-6");
+            document.getElementById("divForPartialPseudo").style.display = "inline-block";
+            document.getElementById("lisaaUusiHiddenField").style.display = "none";
+            document.getElementById("yhteystiedot").style.display = "inline-block";
+        });
+
+        //Opens Persons PartialView if user wants to add another Person after previous successful try
+        $("#lisaaToinenHenkilo").click(function () {
+            var url = "/Contractors/CreatePerson/?id=" + @ViewBag.ContractorYes;
+            var divForPartial = $("#divForPartialPseudo");
+
+            $.ajax({
+                url: url, 
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'get',
+                type: "get",
+                success: function (result) {
+                    $(divForPartial).html(""); 
+                    $(divForPartial).html(result); 
+                }
+            });
+            document.getElementById("lisaaUusiHiddenField").style.display = "none";
+            document.getElementById("successfullyAddedPerson").style.display = "none";
+            document.getElementById("yhteystiedot").style.display = "inline-block";
+        });
+
+        //Closes Persons PartialView and makes modal smaller again
+        $(".closeAddPerson").click(function () {
+            document.getElementById("yhteystiedot").style.display = "none";
+            document.getElementById("lisaaUusiHiddenField").style.display = "block";
+            document.getElementById("divForPartialPseudo").innerHTML = "";
+            document.getElementById("successfullyAddedPerson").style.display = "none";
+            $("#modalWindow").removeClass("modal-lg");
+            $("#rowDiv").removeClass("row");
+            $("#colDiv1").removeClass("col-sm-6");
+            $("#colDiv2").removeClass("col-sm-6");
+        });
+
+        //When modal is shown, empty Persons and then populate Persons dropdown with empty value as first and then only those persons, who belong to Contractor from within modal was opened
+        $(function () {
+            const myModalEl = document.getElementById('ModalContactCreate');
+            var personUrl = '@Url.Action("FetchPersons")';
+            var persons1 = $('#lePerson');
+            myModalEl.addEventListener('shown.bs.modal', event => {
+                $("#ContractorID").val("@ViewBag.ContractorYes");
+                persons1.empty();
+                $.getJSON(personUrl, { ID: $('#ContractorID').val() }, function (data) {
+                    persons1.append($('<option></option>').val('').text(''));
+                    $.each(data, function (index, item) {
+                        persons1.append($('<option></option>').val(item.Value).text(item.Text));
+                    });
+                });
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalContactCreate">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h3>Oho!</h3>
+                        <p class="lead">Näyttää siltä, ​​että et ole kirjautunut sisään!</p>
+                        <a class="btn btn-primary" href="/Home/Index">Takaisin pääsivuun</a><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

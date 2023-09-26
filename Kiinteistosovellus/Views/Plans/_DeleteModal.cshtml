@@ -1,0 +1,124 @@
+﻿@model Kiinteistosovellus.Models.Plans
+
+@if (Session["UserName"] != null @*&& Session["Role"].ToString() == "Admin"*@)
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalPlansDelete">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Suunnitellun menon poisto</h3>
+                </div>
+
+                <div class="modal-body">
+                    <h5>Haluatko varmasti poistaa tämän</h5>
+                    <hr />
+                    <div class="row">
+                        <div class="col-6">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Nimi
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Name)
+                                </dd>
+
+                                <dt>
+                                    Aloituspvm
+                                </dt>
+
+                                <dd>
+                                    @Html.ValueFor(model => model.DateBegin, "{0:dd.MM.yyyy}")
+                                </dd>
+
+                                <dt>
+                                    Päättymispvm
+                                </dt>
+
+                                @{
+                                    if (Model.DateEnd == null)
+                                    {
+                                        <dd>@Html.ValueFor(model => model.DateBegin, "{0:dd.MM.yyyy}")</dd>
+                                    }
+                                    else
+                                    {
+                                        <dd>@Html.ValueFor(model => model.DateEnd, "{0:dd.MM.yyyy}")</dd>
+                                    }
+                                }
+                            </dl>
+                        </div>
+                        <div class="col-6">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Kuvaus
+                                </dt>
+
+                                @{
+                                    if (Model.Desciption == null)
+                                    {
+                                        <dd> - </dd>
+                                    }
+                                    else
+                                    {
+                                        <dd>@Html.DisplayFor(model => model.Desciption)</dd>
+                                    }
+                                }
+
+                                <dt>
+                                    Kokonaishinta
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Price)
+                                </dd>
+
+                                <dt>
+                                    Kuukausittainen vai muu
+                                </dt>
+                                @{
+                                    if (Model.KuukausittainenVaiMuu == null)
+                                    {
+                                        <dd> - </dd>
+                                    }
+                                    else
+                                    {
+                                        <dd>@Html.DisplayFor(model => model.KuukausittainenVaiMuu.MonthOrOtherName)</dd>
+                                    }
+                                }
+
+
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-actions no-color">
+                            <button type="submit" value="Poista" class="btn btn-primary">Poista</button>
+                            <a href="#" id="back" data-bs-dismiss="modal" onclick='destroyDiv("ModalPlansDelete")'>Takaisin</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalPlansDelete">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h3>Oho!</h3>
+                        <p class="lead">Näyttää siltä, ​​että et ole kirjautunut sisään!</p>
+                        <a class="btn btn-primary" href="/Home/Index">Takaisin pääsivuun</a><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

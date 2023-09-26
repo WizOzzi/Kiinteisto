@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Kiinteistosovellus.Models.OtherSpendingTypes>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2>Muut kulutustyypit</h2>
+
+<iframe id="othSpendTypeCreate" style="display:none"></iframe>
+<iframe id="othSpendTypeEdit" style="display:none"></iframe>
+<iframe id="othSpendTypeDelete" style="display:none"></iframe>
+<iframe id="othSpendTypeChart" style="display:none"></iframe>
+
+<a class="card-link ikonka" id="createNewOthSpendTypeModal" title="Uusi Kulutyyppi" role="button"><img src="/Icons/square-add.svg" height="45"></a>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Kulutustyyppi
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.OtherSpendingTypeId != 1000)
+        {
+            bool exists = false;
+            <tr>
+                <td class="centeredTds">
+                    @Html.DisplayFor(modelItem => item.TypeName)
+                </td>
+                <td class="centeredTds">
+                    @if (Session["Role"].ToString() == "Admin")
+                    {
+                        <a class="card-link ikonka editOthSpendTypeModal" title="Muokkaa Kulutustyyppi" data-editid="@item.OtherSpendingTypeId" role="button"><img src="/Icons/square-edit.svg" height="30"></a>
+                        <a class="card-link ikonka deleteOthSpendTypeModal" title="Poista Kulutustyyppi" data-deleteid="@item.OtherSpendingTypeId" role="button"><img src="/Icons/square-delete.svg" height="30"></a>
+                    }
+                    else
+                    {
+                        <a class=" " title="Muokkaa Kulutustyyppi(Ei oikeuksia!)" onclick="alert('Ei oikeuksia!')" data-editid="@item.OtherSpendingTypeId" role="button"><img src="/Icons/square-edit.svg" height="30"></a>
+                        <a class=""  title="Poista Kulutustyyppi(Ei oikeuksia!)" onclick="alert('Ei oikeuksia!')" data-deleteid="@item.OtherSpendingTypeId" role="button"><img src="/Icons/square-delete.svg" height="30"></a>
+                    }
+                    @foreach (Kiinteistosovellus.Models.OtherSpendings spendings in ViewBag.Spendings)
+                    {
+                        if (item.OtherSpendingTypeId == spendings.OtherSpendingTypeID)
+                        {
+                            exists = true;
+                        }
+                    }
+                    @if (exists == true)
+                    {
+                        <a class="card-link ikonka chartOthSpendTypeModal" title="Näytä kaavio" data-chartid="@item.OtherSpendingTypeId" role="button"><img src="/Icons/square-chart.svg" height="30"></a>
+                    }
+                    else
+                    {
+                        <img src="/Icons/square-chart.svg" height="30" class="noUnits" title="Tämä tyyppi ei ole vielä käytössä">
+                    }
+
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+<script type="text/javascript">
+
+    $(function () {
+        $('#homeClicked').removeClass('active');
+        $('#spendingsClicked').removeClass('active');
+        $('#othersClicked').addClass('active');
+    });
+
+    $(function () {
+        $("#createNewOthSpendTypeModal").click(function () {
+            createDiv("othSpendTypeCreate");
+            modalGet("OtherSpendingTypes", "Create", null, "othSpendTypeCreate", "ModalOthSpendTypeCreate");
+        });
+    });
+
+    $(function () {
+        $(".editOthSpendTypeModal").click(function () {
+            createDiv("othSpendTypeEdit");
+            let editId = $(this).data("editid");
+            modalGet("OtherSpendingTypes", "Edit", editId, "othSpendTypeEdit", "ModalOthSpendTypeEdit");
+        });
+    });
+
+    $(function () {
+        $(".deleteOthSpendTypeModal").click(function () {
+            createDiv("othSpendTypeDelete");
+            let deleteId = $(this).data("deleteid");
+            modalGet("OtherSpendingTypes", "Delete", deleteId, "othSpendTypeDelete", "ModalOthSpendTypeDelete");
+        });
+    });
+
+    $(function () {
+        $(".chartOthSpendTypeModal").click(function () {
+            createDiv("othSpendTypeChart");
+            let chartId = $(this).data("chartid");
+            modalGet("OtherSpendingTypes", "ChartContainer", chartId, "othSpendTypeChart", "ModalOtherSpendTypeChart");
+        });
+    });
+</script>

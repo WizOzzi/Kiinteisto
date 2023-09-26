@@ -1,0 +1,52 @@
+﻿
+
+<canvas id="typeChartLine"></canvas>@*max-width:400px;max-height:400px*@
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        let labelTextsLine = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu", "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
+        let dataValuesLine = @ViewBag.Year;
+        const ctxLine = document.getElementById('typeChartLine');
+
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: labelTextsLine,
+                datasets: [{
+                    label: ' euro',
+                    data: dataValuesLine,
+                    borderColor: 'rgba(112, 173, 71)',
+                    backgroundColor: 'rgba(112, 173, 71, 0.2)',
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Kaikki kulut vuoden @ViewBag.ThisYear aikana.',
+                        font: {
+                            size: 15,
+                            family: "sans-serif"
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'rectRounded',
+                            pointStyleWidth: 70
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+</script>

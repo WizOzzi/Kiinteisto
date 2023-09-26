@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Kiinteistosovellus.Models.Plans>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>Suunnitelmat</h2>
+
+<iframe id="plansCreate" style="display:none"></iframe>
+<iframe id="plansEdit" style="display:none"></iframe>
+<iframe id="plansDelete" style="display:none"></iframe>
+<iframe id="otherSpendingCreate" style="display:none"></iframe>
+<iframe id="monthlySpendingCreate" style="display:none"></iframe>
+
+<a class="card-link ikonka" id="createNewPlanModal" title="Uusi Suunnitelma" role="button"><img src="/Icons/square-add.svg" height="45"></a>
+<br />
+<table class="table">
+    <tr class="card-header bg-primary" style="color:white; position: sticky; top: 0;">
+        <th>
+            Nimi
+        </th>
+        <th>
+            Aloituspvm
+        </th>
+        <th>
+            Päättymispvm
+        </th>
+        <th>
+            Kuvaus
+        </th>
+        <th style="width:9%">
+            Kokonaishinta
+        </th>
+        <th style="width:16%">
+            Kuukausittainen vai muu
+        </th>
+
+        <th style="width:9%"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="card-body">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.DateBegin, "{0:dd.MM.yyyy}")
+            </td>
+            @{
+                if (item.DateEnd != null)
+                {
+                    <td>@Html.ValueFor(modelItem => item.DateEnd, "{0:dd.MM.yyyy}")</td>
+                }
+                else
+                {
+                    <td>@Html.ValueFor(modelItem => item.DateBegin, "{0:dd.MM.yyyy}")</td>
+                }
+            }
+            <td style="word-break:break-word">
+                @Html.DisplayFor(modelItem => item.Desciption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KuukausittainenVaiMuu.MonthOrOtherName)
+            </td>
+
+            <td>
+                <a class="card-link ikonka editPlanModal" title="Muokkaa Suunnittelu" data-editid="@item.PlandID" role="button"><img src="/Icons/square-edit.svg" height="30"></a>
+                <a class="card-link ikonka deletePlanModal" title="Poista Suunnittelu" data-deleteid="@item.PlandID" role="button"><img src="/Icons/square-delete.svg" height="30"></a>
+                @if (item.MonthOrOtherID == 1)
+                {
+                    <a class="card-link ikonka creNewMonthlySpending" title="Siirrä Kuukausittainen Suunnittelu" data-movemonthid="@item.PlandID" role="button"><img src="/Icons/square-arrow.svg" height="30"></a>
+                }
+                else if (item.MonthOrOtherID == 2)
+                {
+                    <a class="card-link ikonka creNewOtherSpending" title="Siirrä Muu Suunnittelu" data-moveothid="@item.PlandID" role="button"><img src="/Icons/square-arrow.svg" height="30"></a>
+                }
+                else
+                {
+                    <img src="/Icons/square-arrow.svg" class="noUnits" title="Määritä onko tämä kuukausittainen vai muu kulu" height="30">
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+<script type="text/javascript">
+
+    $(function () {
+        $('#homeClicked').removeClass('active');
+        $('#spendingsClicked').removeClass('active');
+        $('#othersClicked').addClass('active');
+    });
+
+    $(function () {
+        $("#createNewPlanModal").click(function () {
+            createDiv("plansCreate");
+            modalGet("Plans", "Create", null, "plansCreate", "ModalPlansCreate");
+        });
+    });
+
+    $(function () {
+        $(".editPlanModal").click(function () {
+            createDiv("plansEdit");
+            let editId = $(this).data("editid");
+            modalGet("Plans", "Edit", editId, "plansEdit", "ModalPlansEdit");
+        });
+    });
+
+    $(function () {
+        $(".deletePlanModal").click(function () {
+            createDiv("plansDelete");
+            let deleteId = $(this).data("deleteid");
+            modalGet("Plans", "Delete", deleteId, "plansDelete", "ModalPlansDelete");
+        });
+    });
+
+    $(function () {
+        $(".creNewOtherSpending").click(function () {
+            createDiv("otherSpendingCreate");
+            let newSpendingId = $(this).data("moveothid");
+            modalGet("Plans", "_MoveOthPlan", newSpendingId, "otherSpendingCreate", "ModalOtherSpendingPlanCreate");
+        });
+    });
+
+    $(function () {
+        $(".creNewMonthlySpending").click(function () {
+            createDiv("monthlySpendingCreate");
+            let newMonthSpendingId = $(this).data("movemonthid");
+            modalGet("Plans", "_MoveMonthPlan", newMonthSpendingId, "monthlySpendingCreate", "ModalMonthlySpendingPlanCreate");
+        });
+    });
+</script>

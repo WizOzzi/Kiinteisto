@@ -1,0 +1,123 @@
+﻿@model Kiinteistosovellus.ViewModels.MonthlyAndOtherSpendingsByMonthClass
+@{
+    ViewBag.Title = "Pääsivu";
+}
+<br />
+@if (Session["UserName"] == null)
+{
+    <h2>
+        Tervetuloa Kiinteistösovellukseen!
+    </h2>
+    <p class="lead">
+        Ole hyvä ja kirjaudu sisään nähdäksesi sen toiminnot.<br />
+        Rekisteröityminen sovellukseen on mahdollista vain ylläpitäjän kautta.<br />
+    </p>
+}
+
+@if (Session["UserName"] != null)
+{
+    <h2>Pääsivu</h2>
+    <p class="lead">
+        Tänä vuonna on käytetty <b>@ViewBag.ThisYearSumma</b> euroa kiinteistöön liittyviin kuluihin.<br />
+        Alla olevista kaavioista näet, miten kulut ovat jakautuneet kulutyypeittäin ja miten kulut ovat jakautuneet kuukausittain.
+    </p>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chartContainer"></div>
+            <div style="padding-left:60px">@Html.DropDownListFor(model => model.Vuosi, null, new { @class = "form-control form-select" })</div>
+        </div>
+        <div class="col-md-6">
+            <div style="height: 398px" id="chartContainerLine"></div>
+            <div style="margin-left:31.5%">@Html.DropDownList("VuosiLine", null, new { @class = "form-control form-select" })</div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('#homeClicked').addClass('active');
+            $('#spendingsClicked').removeClass('active');
+            $('#othersClicked').removeClass('active');
+        });
+
+
+        $(document).ready(async function () {
+            var thisYear = new Date().getFullYear();
+            document.getElementById("Vuosi").value = thisYear;
+            document.getElementById("VuosiLine").value = thisYear;
+
+            var url = "/Home/PieChart/?year=" + thisYear;
+            var urlLine = "/Home/_LineChart/?year=" + thisYear;
+
+            var divForPartial = $("#chartContainer");
+            var divForPartialLine = $("#chartContainerLine");
+
+            await $.ajax({
+                url: url,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'get',
+                type: "get",
+                success: function (result) {
+                    $(divForPartial).html("");
+                    $(divForPartial).html(result);
+                }
+            });
+
+            await $.ajax({
+                url: urlLine,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'get',
+                type: "get",
+                success: function (result) {
+                    $(divForPartialLine).html("");
+                    $(divForPartialLine).html(result);
+                }
+            });
+        });
+
+        $('#Vuosi').change(function () {
+            var thisYear = $(this).val();
+            var url = "/Home/PieChart/?year=" + thisYear;
+            var divForPartial = $("#chartContainer");
+
+            $.ajax({
+                url: url,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'get',
+                type: "get",
+                success: function (result) {
+                    $(divForPartial).html("");
+                    $(divForPartial).html(result);
+                }
+            });
+        });
+
+        $('#VuosiLine').change(function () {
+            var thisYear = $(this).val();
+            var urlLine = "/Home/_LineChart/?year=" + thisYear;
+            var divForPartialLine = $("#chartContainerLine");
+
+            $.ajax({
+                url: urlLine,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'get',
+                type: "get",
+                success: function (result) {
+                    $(divForPartialLine).html("");
+                    $(divForPartialLine).html(result);
+                }
+            });
+        });
+
+    </script>
+
+}
+
+

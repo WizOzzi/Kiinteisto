@@ -1,0 +1,71 @@
+﻿<canvas style="width:100%" id="typeChart"></canvas>
+<div id="thisMonth" style="display:none">@ViewBag.ThisMonth</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var thisMonth = $("#thisMonth").text();
+               //CHART
+        let labelTexts = [@Html.Raw(ViewBag.Category)];
+        let dataValues = [@ViewBag.Price];
+        //console.log(labelTexts);
+        console.log(dataValues);
+        const ctx = document.getElementById('typeChart');
+        var kaavio = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labelTexts,
+                datasets: [{
+                    label: 'Prosentti',
+                    data: dataValues,
+                    borderColor: 'white',
+                    backgroundColor: ['rgba(112, 173, 71, 1)',
+                        'rgba(112, 173, 71, 0.9)',
+                        'rgba(112, 173, 71, 0.8)',
+                        'rgba(112, 173, 71, 0.7)',
+                        'rgba(112, 173, 71, 0.6)',
+                        'rgba(112, 173, 71, 0.5)',
+                        'rgba(112, 173, 71, 0.4)',
+                        'rgba(112, 173, 71, 0.3)',
+                        'rgba(117, 184, 72, 0.1)',
+                        'rgba(117, 184, 72, 0.9)',
+                        'rgba(117, 184, 72, 0.8)',
+                        'rgba(117, 184, 72, 0.7)',
+                        'rgba(117, 184, 72, 0.6)',
+                        'rgba(117, 184, 72, 0.5)',
+                        'rgba(117, 184, 72, 0.4)',
+                        'rgba(117, 184, 72, 0.3)',],
+                    fill: true,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Kulutyypit ja niiden osuus ' + thisMonth + ' kokonaiskuluista.',
+                        font: {
+                            size: 15,
+                            family: "sans-serif"
+                        }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'rectRounded',
+                            pointStyleWidth: 70,
+                            font: {
+                                size: 15,
+                                family: "sans-serif",
+                                style: "normal"
+                            }
+                        }
+                    }
+                }
+            },
+        });
+    });
+
+</script>

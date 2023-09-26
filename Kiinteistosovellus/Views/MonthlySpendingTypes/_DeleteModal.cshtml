@@ -1,0 +1,80 @@
+﻿@model Kiinteistosovellus.Models.MonthlySpendingTypes
+
+@if (Session["UserName"] != null && Session["Role"].ToString() == "Admin")
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalMSDelete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h3>Poista</h3>
+                </div>
+
+                <div class="modal-body">
+                    <h5>Oletko varma, että haluat poistaa tämän?</h5>
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Kulutustyyppi
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TypeName)
+                            </dd>
+
+                            <dt>
+                                Yksikkö
+                            </dt>
+                            @{
+                                if (Model.Unit == null)
+                                {
+                                    <dd> - </dd>
+                                }
+                                else
+                                {
+                                    <dd>@Html.DisplayFor(model => model.Unit)</dd>
+                                }
+                            }
+                        </dl>
+                    </div>
+                    <p class="text-danger">Huom! <br />Jos tämä kulutustyyppi on käytössä, poistaminen muuttaisi kulutustyyppien nimet kaikissa siihen liittyvissä kuluissa muotoon <br />"(poistettu)"!</p>
+                </div>
+
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-primary">Poista</button>
+                        <a href="#" data-bs-dismiss="modal" onclick='destroyDiv("ModalMSDelete")'>Takaisin</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalMSDelete">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h3>Oho!</h3>
+                        <p class="lead">Näyttää siltä, ​​että et ole kirjautunut sisään!</p>
+                        <a class="btn btn-primary" href="/Home/Index">Takaisin pääsivuun</a><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                    
+}
+
+
+
+
+
+
+
+

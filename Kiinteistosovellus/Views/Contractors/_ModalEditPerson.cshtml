@@ -1,0 +1,82 @@
+﻿@model Kiinteistosovellus.Models.Persons
+
+@if (Session["UserName"] != null)
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalPersonEdit">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Muokkaa henkilöä</h3>
+                </div>
+
+                <div class="modal-body">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editPersonForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.PersonID)
+                            @Html.HiddenFor(model => model.ContractorID)
+
+                            <div class="form-group">
+                                Etunimi* @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Sukunimi* @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Kuvaus @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <div class="form-actions no-color">
+                        <input type="button" value="Tallenna" id="submitDataModal" class="btn btn-primary" />
+                        <a href="#" id="back" data-bs-dismiss="modal" onclick='destroyDiv("ModalPersonEdit")'>Takaisin</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $("#submitDataModal").click(function () {
+            submitModalPost("Contractors", "EditPerson", "editPersonForm", "ModalPersonEdit");
+        });
+
+        $(document).ready(function () {
+            dismissOrRedirect('/Contractors/Index');
+        });
+
+    </script>
+}
+else
+{
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalPersonEdit">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h3>Oho!</h3>
+                        <p class="lead">Näyttää siltä, ​​että et ole kirjautunut sisään!</p>
+                        <a class="btn btn-primary" href="/Home/Index">Takaisin pääsivuun</a><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
